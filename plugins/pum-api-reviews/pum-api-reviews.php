@@ -1,7 +1,7 @@
 <?php
 /*
 Plugin Name: PUM API - Reviews
-Plugin URI: https://www.cozmoslabs.com/wordpress-profile-builder/
+Plugin URI:
 Description: An API endpoint to collect user review request results.
 Version: 1.0.0
 Author: danieliser
