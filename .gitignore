@@ -1,0 +1,14 @@
+# Created by .ignore support plugin (hsz.mobi)
+### WordPress template
+*.log
+advanced-cache.php
+wp-cache-config.php
+backup-db/
+backups/
+blogs.dir/
+cache/
+upgrade/
+uploads/
+themes/
+plugins/*
+!plugins/pum*
