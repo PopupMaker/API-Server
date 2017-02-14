@@ -17,54 +17,51 @@ define( 'HELPSCOUT_DOCS_SUBDOMAIN', 'popupmaker' );
  * Include IframeResizer
  */
 function support_form_scripts() {
-    wp_register_script( 'iframe-resizer-content',  plugin_dir_url( __FILE__ ) . 'iframeResizer.contentWindow.min.js' );
+	wp_register_script( 'iframe-resizer-content', plugin_dir_url( __FILE__ ) . 'assets/js/iframeResizer.contentWindow.min.js' );
 
-    if ( is_page( 'dashboard-support' ) ) {
-        wp_enqueue_script( 'iframe-resizer-content' );
-    }   
+	if ( is_page( 'dashboard-support' ) ) {
+		wp_enqueue_script( 'iframe-resizer-content' );
+	}
 }
+
 add_action( 'wp_enqueue_scripts', 'support_form_scripts' );
 
 function _240_test_scripts() {
-    if ( is_page( 'dashboard-support' ) ) {
-?>
-<script type="text/javascript">
-(function ($, document) {
-    if(window.location.href.indexOf("fl_builder") === -1) {
-        $('#submit-a-support-ticket').hide(0);
-    }
-    
-    $('.fl-node-589598f6c3452 a[role="button"]').click(function () {
-        $('#submit-a-support-ticket').show(0, function () {
-		setTimeout(function () {
+	if ( is_page( 'dashboard-support' ) ) {
+		?>
+		<script type="text/javascript">
+			(function ($, document) {
+				if (window.location.href.indexOf("fl_builder") === -1) {
+					$('#submit-a-support-ticket').hide(0);
+				}
 
-		if ('parentIFrame' in window) {
-			parentIFrame.scrollTo(0, $('#submit-a-support-ticket').offset().top);
-		} else {
-			$('html, body').animate({ scrollTop: $('#submit-a-support-ticket').offset().top }, 'fast');
-		}
+				function scrollTo(where) {
+					if ('parentIFrame' in window) {
+						parentIFrame.scrollTo(0, where);
+					} else {
+						$('html, body').animate({scrollTop: where}, 'fast');
+					}
+				}
 
-		}, 50);
+				$('.fl-node-589598f6c3452 a[role="button"]').click(function () {
+					$('#submit-a-support-ticket').show(0, function () {
+						setTimeout(function () {
+							scrollTo($('#submit-a-support-ticket').offset().top);
+						}, 50);
+					});
+				});
 
-	});
-
-
-    });
-
-    $('body').on( 'gf_hs_search_results_found', function () {
-	setTimeout(function () {
-		if ('parentIFrame' in window) {
-			parentIFrame.scrollTo(0, $('.docs-search-wrap .results-found.message-results').offset().top);
-		} else {
-			$('html, body').animate({ scrollTop: $('.docs-search-wrap .results-found.message-results').offset().top }, 'fast');
-		}
-	}, 50);
-    });
-}(jQuery, document));
-</script>
-<?php
-    }
+				$('body').on('gf_hs_search_results_found', function () {
+					setTimeout(function () {
+						scrollTo($('.docs-search-wrap .results-found.message-results').offset().top);
+					}, 50);
+				});
+			}(jQuery, document));
+		</script>
+		<?php
+	}
 }
+
 add_action( 'wp_footer', '_240_test_scripts', 1000 );
 
 
